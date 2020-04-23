@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Redux-Reducer | Anji博客</title>
+    <meta name="description" content="Welcome to my blog ">
+    
+    
+    <link rel="preload" href="/assets/css/0.styles.f2124281.css" as="style"><link rel="preload" href="/assets/js/app.d2db35b1.js" as="script"><link rel="preload" href="/assets/js/2.3d65a9bd.js" as="script"><link rel="preload" href="/assets/js/16.976ac738.js" as="script"><link rel="prefetch" href="/assets/js/10.7e1a2abf.js"><link rel="prefetch" href="/assets/js/11.b67926d6.js"><link rel="prefetch" href="/assets/js/12.1acbb188.js"><link rel="prefetch" href="/assets/js/13.3042c592.js"><link rel="prefetch" href="/assets/js/14.35ddf8b9.js"><link rel="prefetch" href="/assets/js/15.4d8585d4.js"><link rel="prefetch" href="/assets/js/17.403f7719.js"><link rel="prefetch" href="/assets/js/18.92c074ba.js"><link rel="prefetch" href="/assets/js/19.979680c0.js"><link rel="prefetch" href="/assets/js/20.12c24125.js"><link rel="prefetch" href="/assets/js/21.75236644.js"><link rel="prefetch" href="/assets/js/22.99db2e15.js"><link rel="prefetch" href="/assets/js/23.b5999731.js"><link rel="prefetch" href="/assets/js/24.0d1a4624.js"><link rel="prefetch" href="/assets/js/25.1524be97.js"><link rel="prefetch" href="/assets/js/26.f9d1c2bf.js"><link rel="prefetch" href="/assets/js/27.13235d74.js"><link rel="prefetch" href="/assets/js/28.8e5be585.js"><link rel="prefetch" href="/assets/js/29.49595657.js"><link rel="prefetch" href="/assets/js/3.24073063.js"><link rel="prefetch" href="/assets/js/30.01cb4de1.js"><link rel="prefetch" href="/assets/js/4.57ba7ae3.js"><link rel="prefetch" href="/assets/js/5.838622a9.js"><link rel="prefetch" href="/assets/js/6.7222ed7b.js"><link rel="prefetch" href="/assets/js/7.918a646b.js"><link rel="prefetch" href="/assets/js/8.564e1d40.js"><link rel="prefetch" href="/assets/js/9.6b6163c2.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f2124281.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Anji博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>入门</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>ajax</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>jQuery</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>React</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/React/base/" class="sidebar-link">React</a></li><li><a href="/React/psr/" class="sidebar-link">React——三大特性</a></li><li><a href="/React/life/" class="sidebar-link">React——生命周期</a></li><li><a href="/React/reduxbase/" class="sidebar-link">Redux</a></li><li><a href="/React/store/" class="sidebar-link">Redux——Store</a></li><li><a href="/React/action/" class="sidebar-link">Redux-Action</a></li><li><a href="/React/reducer/" class="active sidebar-link">Redux-Reducer</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/React/reducer/#action-处理" class="sidebar-link">Action 处理</a></li><li class="sidebar-sub-header"><a href="/React/reducer/#处理多个-action" class="sidebar-link">处理多个 action</a></li><li class="sidebar-sub-header"><a href="/React/reducer/#拆分-reducer" class="sidebar-link">拆分 Reducer</a></li></ul></li><li><a href="/React/asaction/" class="sidebar-link">Redux-异步Action</a></li><li><a href="/React/quesition/" class="sidebar-link">React——面试题</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>vue</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><p><strong>Reducers</strong> 指定了应用状态的变化如何响应 <code>actions</code> 并发送到 store 的，记住 actions 只是描述了<em>有事情发生了</em>这一事实，并没有描述应用如何更新 state。 ###设计 State 结构</p> <p>在 Redux 应用中，所有的 state 都被保存在一个单一对象中。建议在写代码前先想一下这个对象的结构。如何才能以最简的形式把应用的 state 用对象描述出来？</p> <p>以 todo 应用为例，需要保存两种不同的数据：
+当前选中的任务过滤条件；
+完整的任务列表。</p> <p>通常，这个 state 树还需要存放其它一些数据，以及一些 UI 相关的 state。这样做没问题，但尽量把这些数据与 UI 相关的 state 分开。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token punctuation">{</span>
+  visibilityFilter<span class="token punctuation">:</span> <span class="token string">'SHOW_ALL'</span><span class="token punctuation">,</span>
+  todos<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      text<span class="token punctuation">:</span> <span class="token string">'Consider using Redux'</span><span class="token punctuation">,</span>
+      completed<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      text<span class="token punctuation">:</span> <span class="token string">'Keep all state in a single tree'</span><span class="token punctuation">,</span>
+      completed<span class="token punctuation">:</span> <span class="token boolean">false</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div><blockquote><h5 id="处理-reducer-关系时的注意事项"><a href="#处理-reducer-关系时的注意事项" aria-hidden="true" class="header-anchor">#</a> 处理 Reducer 关系时的注意事项</h5> <p>开发复杂的应用时，不可避免会有一些数据相互引用。建议你尽可能地把 state 范式化，不存在嵌套。把所有数据放到一个对象里，每个数据以 ID 为主键，不同实体或列表间通过 ID 相互引用数据。把应用的 state 想像成数据库。例如，实际开发中，在 state 里同时存放 <code>todosById: { id -&gt; todo }</code> 和 <code>todos: array&lt;id&gt;</code> 是比较好的方式，本文中为了保持示例简单没有这样处理。</p></blockquote> <h2 id="action-处理"><a href="#action-处理" aria-hidden="true" class="header-anchor">#</a> Action 处理</h2> <p>现在我们已经确定了 state 对象的结构，就可以开始开发 reducer。reducer 就是一个纯函数，接收旧的 state 和 action，返回新的 state。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token punctuation">(</span><span class="token parameter">previousState<span class="token punctuation">,</span> action</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> newState<span class="token punctuation">;</span>
+</code></pre></div><p>之所以将这样的函数称之为 reducer，是因为这种函数与被传入 <code>Array.prototype.reduce(reducer, ?initialValue)</code> 里的回调函数属于相同的类型。保持 reducer 纯净非常重要。<strong>永远不要</strong>在 reducer 里做这些操作：</p> <ul><li>修改传入参数；</li> <li>执行有副作用的操作，如 API 请求和路由跳转；</li> <li>调用非纯函数，如 <code>Date.now()</code> 或 <code>Math.random()</code>。</li></ul> <p><strong>只要传入参数相同，返回计算得到的下一个 state 就一定相同。没有特殊情况、没有副作用，没有 API 请求、没有变量修改，单纯执行计算。</strong></p> <p>明白了这些之后，就可以开始编写 reducer，并让它来处理之前定义过的 <code>action</code>。</p> <p>我们将以指定 state 的初始状态作为开始。Redux 首次执行时，state 为 <code>undefined</code>，此时我们可借机设置并返回应用的初始 state。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> VisibilityFilters <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./actions'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> initialState <span class="token operator">=</span> <span class="token punctuation">{</span>
+  visibilityFilter<span class="token punctuation">:</span> VisibilityFilters<span class="token punctuation">.</span><span class="token constant">SHOW_ALL</span><span class="token punctuation">,</span>
+  todos<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">todoApp</span><span class="token punctuation">(</span><span class="token parameter">state<span class="token punctuation">,</span> action</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> state <span class="token operator">===</span> <span class="token string">'undefined'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> initialState<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 这里暂不处理任何 action，</span>
+  <span class="token comment">// 仅返回传入的 state。</span>
+  <span class="token keyword">return</span> state<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>这里一个技巧是使用 ES6 参数默认值语法来精简代码。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">todoApp</span><span class="token punctuation">(</span><span class="token parameter">state <span class="token operator">=</span> initialState<span class="token punctuation">,</span> action</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 这里暂不处理任何 action，</span>
+  <span class="token comment">// 仅返回传入的 state。</span>
+  <span class="token keyword">return</span> state<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>现在可以处理 <code>SET_VISIBILITY_FILTER</code>。需要做的只是改变 state 中的 <code>visibilityFilter</code>。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">todoApp</span><span class="token punctuation">(</span><span class="token parameter">state <span class="token operator">=</span> initialState<span class="token punctuation">,</span> action</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>action<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token constant">SET_VISIBILITY_FILTER</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        visibilityFilter<span class="token punctuation">:</span> action<span class="token punctuation">.</span>filter
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>注意:</p> <ol><li><p><strong>不要修改 <code>state</code>。</strong> 使用 <code>Object.assign()</code> 新建了一个副本。不能这样使用 <code>Object.assign(state, { visibilityFilter: action.filter })</code>，因为它会改变第一个参数的值。你<strong>必须</strong>把第一个参数设置为空对象。你也可以开启对 ES7 提案对象展开运算符的支持, 从而使用 <code>{ ...state, ...newState }</code> 达到相同的目的。</p></li> <li><p>**在 <code>default</code> 情况下返回旧的 <code>state</code>。**遇到未知的 action 时，一定要返回旧的 <code>state</code>。</p></li></ol> <blockquote><h5 id="object-assign-须知"><a href="#object-assign-须知" aria-hidden="true" class="header-anchor">#</a> <code>Object.assign</code> 须知</h5> <p><code>Object.assign()</code> 是 ES6 特性，但多数浏览器并不支持。你要么使用 polyfill，Babel 插件，或者使用其它库如 <code>_.assign()</code> 提供的帮助方法。</p> <h5 id="switch-和样板代码须知"><a href="#switch-和样板代码须知" aria-hidden="true" class="header-anchor">#</a> <code>switch</code> 和样板代码须知</h5> <p><code>switch</code> 语句并不是严格意义上的样板代码。Flux 中真实的样板代码是概念性的：更新必须要发送、Store 必须要注册到 Dispatcher、Store 必须是对象（开发同构应用时变得非常复杂）。为了解决这些问题，Redux 放弃了 event emitters（事件发送器），转而使用纯 reducer。</p> <p>很不幸到现在为止，还有很多人存在一个误区：根据文档中是否使用 <code>switch</code> 来决定是否使用它。如果你不喜欢 <code>switch</code>，完全可以自定义一个 <code>createReducer</code> 函数来接收一个事件处理函数列表。</p></blockquote> <h2 id="处理多个-action"><a href="#处理多个-action" aria-hidden="true" class="header-anchor">#</a> 处理多个 action</h2> <p>还有两个 action 需要处理。就像我们处理 <code>SET_VISIBILITY_FILTER</code> 一样，我们引入 <code>ADD_TODO</code> 和 <code>TOGGLE_TODO</code> 两个 actions 并且扩展我们的 reducer 去处理 <code>ADD_TODO</code>.</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token punctuation">{</span>
+  <span class="token constant">ADD_TODO</span><span class="token punctuation">,</span>
+  <span class="token constant">TOGGLE_TODO</span><span class="token punctuation">,</span>
+  <span class="token constant">SET_VISIBILITY_FILTER</span><span class="token punctuation">,</span>
+  VisibilityFilters
+<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./actions'</span>
+
+<span class="token operator">...</span>
+
+<span class="token keyword">function</span> <span class="token function">todoApp</span><span class="token punctuation">(</span><span class="token parameter">state <span class="token operator">=</span> initialState<span class="token punctuation">,</span> action</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>action<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token constant">SET_VISIBILITY_FILTER</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        visibilityFilter<span class="token punctuation">:</span> action<span class="token punctuation">.</span>filter
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword">case</span> <span class="token constant">ADD_TODO</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        todos<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+          <span class="token operator">...</span>state<span class="token punctuation">.</span>todos<span class="token punctuation">,</span>
+          <span class="token punctuation">{</span>
+            text<span class="token punctuation">:</span> action<span class="token punctuation">.</span>text<span class="token punctuation">,</span>
+            completed<span class="token punctuation">:</span> <span class="token boolean">false</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword">default</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> state
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div><p>如上，不直接修改 <code>state</code> 中的字段，而是返回新对象。新的 <code>todos</code> 对象就相当于旧的 <code>todos</code> 在末尾加上新建的 todo。而这个新的 todo 又是基于 action 中的数据创建的。</p> <p>最后，<code>TOGGLE_TODO</code> 的实现也很好理解：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">case</span> <span class="token constant">TOGGLE_TODO</span><span class="token punctuation">:</span>
+  <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    todos<span class="token punctuation">:</span> state<span class="token punctuation">.</span>todos<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">todo<span class="token punctuation">,</span> index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">===</span> action<span class="token punctuation">.</span>index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> todo<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+          completed<span class="token punctuation">:</span> <span class="token operator">!</span>todo<span class="token punctuation">.</span>completed
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">return</span> todo
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+</code></pre></div><p>我们需要修改数组中指定的数据项而又不希望导致<strong>突变</strong>, 因此我们的做法是在创建一个新的数组后, 将那些无需修改的项原封不动移入, 接着对需修改的项用新生成的对象替换。(Javascript 中的对象存储时均是由值和指向值的引用两个部分构成。此处<strong>突变</strong>指直接修改引用所指向的值, 而引用本身保持不变。) 如果经常需要这类的操作，可以选择使用帮助类 React-addons-update，updeep，或者使用原生支持深度更新的库 Immutable。最后，时刻谨记永远不要在克隆 <code>state</code> 前修改它。</p> <h2 id="拆分-reducer"><a href="#拆分-reducer" aria-hidden="true" class="header-anchor">#</a> 拆分 Reducer</h2> <p>目前的代码看起来有些冗长：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">todoApp</span><span class="token punctuation">(</span><span class="token parameter">state <span class="token operator">=</span> initialState<span class="token punctuation">,</span> action</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>action<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token constant">SET_VISIBILITY_FILTER</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        visibilityFilter<span class="token punctuation">:</span> action<span class="token punctuation">.</span>filter
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token constant">ADD_TODO</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        todos<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+          <span class="token operator">...</span>state<span class="token punctuation">.</span>todos<span class="token punctuation">,</span>
+          <span class="token punctuation">{</span>
+            text<span class="token punctuation">:</span> action<span class="token punctuation">.</span>text<span class="token punctuation">,</span>
+            completed<span class="token punctuation">:</span> <span class="token boolean">false</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token constant">TOGGLE_TODO</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        todos<span class="token punctuation">:</span> state<span class="token punctuation">.</span>todos<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">todo<span class="token punctuation">,</span> index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">===</span> action<span class="token punctuation">.</span>index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> todo<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+              completed<span class="token punctuation">:</span> <span class="token operator">!</span>todo<span class="token punctuation">.</span>completed
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+          <span class="token keyword">return</span> todo<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>上面代码能否变得更通俗易懂？这里的 <code>todos</code> 和 <code>visibilityFilter</code> 的更新看起来是相互独立的。有时 state 中的字段是相互依赖的，需要认真考虑，但在这个案例中我们可以把 <code>todos</code> 更新的业务逻辑拆分到一个单独的函数里：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">todos</span><span class="token punctuation">(</span><span class="token parameter">state <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> action</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>action<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token constant">ADD_TODO</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> <span class="token punctuation">[</span>
+        <span class="token operator">...</span>state<span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+          text<span class="token punctuation">:</span> action<span class="token punctuation">.</span>text<span class="token punctuation">,</span>
+          completed<span class="token punctuation">:</span> <span class="token boolean">false</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token constant">TOGGLE_TODO</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">todo<span class="token punctuation">,</span> index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">===</span> action<span class="token punctuation">.</span>index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> todo<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+            completed<span class="token punctuation">:</span> <span class="token operator">!</span>todo<span class="token punctuation">.</span>completed
+          <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> todo<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">todoApp</span><span class="token punctuation">(</span><span class="token parameter">state <span class="token operator">=</span> initialState<span class="token punctuation">,</span> action</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>action<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token constant">SET_VISIBILITY_FILTER</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        visibilityFilter<span class="token punctuation">:</span> action<span class="token punctuation">.</span>filter
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token constant">ADD_TODO</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        todos<span class="token punctuation">:</span> <span class="token function">todos</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>todos<span class="token punctuation">,</span> action<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token constant">TOGGLE_TODO</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        todos<span class="token punctuation">:</span> <span class="token function">todos</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>todos<span class="token punctuation">,</span> action<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>注意 <code>todos</code> 依旧接收 <code>state</code>，但它变成了一个数组！现在 <code>todoApp</code> 只把需要更新的一部分 state 传给 <code>todos</code> 函数，<code>todos</code> 函数自己确定如何更新这部分数据。<strong>这就是所谓的 <em>reducer 合成</em>，它是开发 Redux 应用最基础的模式。</strong></p> <p>下面深入探讨一下如何做 reducer 合成。能否抽出一个 reducer 来专门管理 <code>visibilityFilter</code>？当然可以：</p> <p>首先引用, 让我们使用 ES6 对象结构 去声明 <code>SHOW_ALL</code>:</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token constant">SHOW_ALL</span> <span class="token punctuation">}</span> <span class="token operator">=</span> VisibilityFilters<span class="token punctuation">;</span>
+</code></pre></div><p>接下来：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">visibilityFilter</span><span class="token punctuation">(</span><span class="token parameter">state <span class="token operator">=</span> <span class="token constant">SHOW_ALL</span><span class="token punctuation">,</span> action</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>action<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token constant">SET_VISIBILITY_FILTER</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> action<span class="token punctuation">.</span>filter<span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>现在我们可以开发一个函数来做为主 reducer，它调用多个子 reducer 分别处理 state 中的一部分数据，然后再把这些数据合成一个大的单一对象。主 reducer 并不需要设置初始化时完整的 state。初始时，如果传入 <code>undefined</code>, 子 reducer 将负责返回它们的默认值。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">todos</span><span class="token punctuation">(</span><span class="token parameter">state <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> action</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>action<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token constant">ADD_TODO</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> <span class="token punctuation">[</span>
+        <span class="token operator">...</span>state<span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+          text<span class="token punctuation">:</span> action<span class="token punctuation">.</span>text<span class="token punctuation">,</span>
+          completed<span class="token punctuation">:</span> <span class="token boolean">false</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token constant">TOGGLE_TODO</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">todo<span class="token punctuation">,</span> index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">===</span> action<span class="token punctuation">.</span>index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> todo<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+            completed<span class="token punctuation">:</span> <span class="token operator">!</span>todo<span class="token punctuation">.</span>completed
+          <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> todo<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">visibilityFilter</span><span class="token punctuation">(</span><span class="token parameter">state <span class="token operator">=</span> <span class="token constant">SHOW_ALL</span><span class="token punctuation">,</span> action</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>action<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token constant">SET_VISIBILITY_FILTER</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> action<span class="token punctuation">.</span>filter<span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">todoApp</span><span class="token punctuation">(</span><span class="token parameter">state <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> action</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    visibilityFilter<span class="token punctuation">:</span> <span class="token function">visibilityFilter</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>visibilityFilter<span class="token punctuation">,</span> action<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    todos<span class="token punctuation">:</span> <span class="token function">todos</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>todos<span class="token punctuation">,</span> action<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p><strong>注意每个 reducer 只负责管理全局 state 中它负责的一部分。每个 reducer 的 <code>state</code> 参数都不同，分别对应它管理的那部分 state 数据。</strong></p> <p>现在看起来好多了！随着应用的膨胀，我们还可以将拆分后的 reducer 放到不同的文件中, 以保持其独立性并用于专门处理不同的数据域。</p> <p>最后，Redux 提供了 <code>combineReducers()</code>工具类来做上面 <code>todoApp</code> 做的事情，这样就能消灭一些样板代码了。有了它，可以这样重构 <code>todoApp</code>：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> combineReducers <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'redux'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> todoApp <span class="token operator">=</span> <span class="token function">combineReducers</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  visibilityFilter<span class="token punctuation">,</span>
+  todos
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> todoApp<span class="token punctuation">;</span>
+</code></pre></div><p>注意上面的写法和下面完全等价：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">function</span> <span class="token function">todoApp</span><span class="token punctuation">(</span><span class="token parameter">state <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> action</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    visibilityFilter<span class="token punctuation">:</span> <span class="token function">visibilityFilter</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>visibilityFilter<span class="token punctuation">,</span> action<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    todos<span class="token punctuation">:</span> <span class="token function">todos</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>todos<span class="token punctuation">,</span> action<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>你也可以给它们设置不同的 key，或者调用不同的函数。下面两种合成 reducer 方法完全等价：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> reducer <span class="token operator">=</span> <span class="token function">combineReducers</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  a<span class="token punctuation">:</span> doSomethingWithA<span class="token punctuation">,</span>
+  b<span class="token punctuation">:</span> processB<span class="token punctuation">,</span>
+  c<span class="token punctuation">:</span> c
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">reducer</span><span class="token punctuation">(</span><span class="token parameter">state <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> action</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    a<span class="token punctuation">:</span> <span class="token function">doSomethingWithA</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>a<span class="token punctuation">,</span> action<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    b<span class="token punctuation">:</span> <span class="token function">processB</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>b<span class="token punctuation">,</span> action<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    c<span class="token punctuation">:</span> <span class="token function">c</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>c<span class="token punctuation">,</span> action<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p><code>combineReducers()</code>所做的只是生成一个函数，这个函数来调用你的一系列 reducer，每个 reducer <strong>根据它们的 key 来筛选出 state 中的一部分数据并处理</strong>，然后这个生成的函数再将所有 reducer 的结果合并成一个大的对象。正如其他 reducers，如果 combineReducers() 中包含的所有 reducers 都没有更改 state，那么也就不会创建一个新的对象。</p> <blockquote><h5 id="es6-用户使用注意"><a href="#es6-用户使用注意" aria-hidden="true" class="header-anchor">#</a> ES6 用户使用注意</h5> <p><code>combineReducers</code> 接收一个对象，可以把所有顶级的 reducer 放到一个独立的文件中，通过 <code>export</code> 暴露出每个 reducer 函数，然后使用 <code>import * as reducers</code> 得到一个以它们名字作为 key 的 object：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> combineReducers <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'redux'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> reducers <span class="token keyword">from</span> <span class="token string">'./reducers'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> todoApp <span class="token operator">=</span> <span class="token function">combineReducers</span><span class="token punctuation">(</span>reducers<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div></blockquote></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/React/action/" class="prev">
+          Redux-Action
+        </a></span> <span class="next"><a href="/React/asaction/">
+          Redux-异步Action
+        </a>
+        →
+      </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.d2db35b1.js" defer></script><script src="/assets/js/2.3d65a9bd.js" defer></script><script src="/assets/js/16.976ac738.js" defer></script>
+  </body>
+</html>

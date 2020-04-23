@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Redux-异步Action | Anji博客</title>
+    <meta name="description" content="Welcome to my blog ">
+    
+    
+    <link rel="preload" href="/assets/css/0.styles.f2124281.css" as="style"><link rel="preload" href="/assets/js/app.d2db35b1.js" as="script"><link rel="preload" href="/assets/js/2.3d65a9bd.js" as="script"><link rel="preload" href="/assets/js/14.35ddf8b9.js" as="script"><link rel="prefetch" href="/assets/js/10.7e1a2abf.js"><link rel="prefetch" href="/assets/js/11.b67926d6.js"><link rel="prefetch" href="/assets/js/12.1acbb188.js"><link rel="prefetch" href="/assets/js/13.3042c592.js"><link rel="prefetch" href="/assets/js/15.4d8585d4.js"><link rel="prefetch" href="/assets/js/16.976ac738.js"><link rel="prefetch" href="/assets/js/17.403f7719.js"><link rel="prefetch" href="/assets/js/18.92c074ba.js"><link rel="prefetch" href="/assets/js/19.979680c0.js"><link rel="prefetch" href="/assets/js/20.12c24125.js"><link rel="prefetch" href="/assets/js/21.75236644.js"><link rel="prefetch" href="/assets/js/22.99db2e15.js"><link rel="prefetch" href="/assets/js/23.b5999731.js"><link rel="prefetch" href="/assets/js/24.0d1a4624.js"><link rel="prefetch" href="/assets/js/25.1524be97.js"><link rel="prefetch" href="/assets/js/26.f9d1c2bf.js"><link rel="prefetch" href="/assets/js/27.13235d74.js"><link rel="prefetch" href="/assets/js/28.8e5be585.js"><link rel="prefetch" href="/assets/js/29.49595657.js"><link rel="prefetch" href="/assets/js/3.24073063.js"><link rel="prefetch" href="/assets/js/30.01cb4de1.js"><link rel="prefetch" href="/assets/js/4.57ba7ae3.js"><link rel="prefetch" href="/assets/js/5.838622a9.js"><link rel="prefetch" href="/assets/js/6.7222ed7b.js"><link rel="prefetch" href="/assets/js/7.918a646b.js"><link rel="prefetch" href="/assets/js/8.564e1d40.js"><link rel="prefetch" href="/assets/js/9.6b6163c2.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f2124281.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Anji博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>入门</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>ajax</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>jQuery</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>React</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/React/base/" class="sidebar-link">React</a></li><li><a href="/React/psr/" class="sidebar-link">React——三大特性</a></li><li><a href="/React/life/" class="sidebar-link">React——生命周期</a></li><li><a href="/React/reduxbase/" class="sidebar-link">Redux</a></li><li><a href="/React/store/" class="sidebar-link">Redux——Store</a></li><li><a href="/React/action/" class="sidebar-link">Redux-Action</a></li><li><a href="/React/reducer/" class="sidebar-link">Redux-Reducer</a></li><li><a href="/React/asaction/" class="active sidebar-link">Redux-异步Action</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/React/asaction/#异步-action" class="sidebar-link">异步 Action</a></li><li class="sidebar-sub-header"><a href="/React/asaction/#同步-action-创建函数（action-creator）" class="sidebar-link">同步 Action 创建函数（Action Creator）</a></li><li class="sidebar-sub-header"><a href="/React/asaction/#设计-state-结构" class="sidebar-link">设计 state 结构</a></li><li class="sidebar-sub-header"><a href="/React/asaction/#处理-action" class="sidebar-link">处理 Action</a></li><li class="sidebar-sub-header"><a href="/React/asaction/#异步-action-创建函数" class="sidebar-link">异步 action 创建函数</a></li></ul></li><li><a href="/React/quesition/" class="sidebar-link">React——面试题</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>vue</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="异步-action"><a href="#异步-action" aria-hidden="true" class="header-anchor">#</a> 异步 Action</h2> <p>当调用异步 API 时，有两个非常关键的时刻：发起请求的时刻，和接收到响应的时刻（也可能是超时）。</p> <p>这两个时刻都可能会更改应用的 state；为此，你需要 dispatch 普通的同步 action。一般情况下，每个 API 请求都需要 dispatch 至少三种 action：</p> <ul><li><p><strong>一种通知 reducer 请求开始的 action。</strong></p> <p>对于这种 action，reducer 可能会切换一下 state 中的 <code>isFetching</code> 标记。以此来告诉 UI 来显示加载界面。</p></li> <li><p><strong>一种通知 reducer 请求成功的 action。</strong></p> <p>对于这种 action，reducer 可能会把接收到的新数据合并到 state 中，并重置 <code>isFetching</code>。UI 则会隐藏加载界面，并显示接收到的数据。</p></li> <li><p><strong>一种通知 reducer 请求失败的 action。</strong></p> <p>对于这种 action，reducer 可能会重置 <code>isFetching</code>。另外，有些 reducer 会保存这些失败信息，并在 UI 里显示出来。</p></li></ul> <p>为了区分这三种 action，可能在 action 里添加一个专门的 <code>status</code> 字段作为标记位：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token punctuation">{</span> type<span class="token punctuation">:</span> <span class="token string">'FETCH_POSTS'</span> <span class="token punctuation">}</span>
+<span class="token punctuation">{</span> type<span class="token punctuation">:</span> <span class="token string">'FETCH_POSTS'</span><span class="token punctuation">,</span> status<span class="token punctuation">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span> error<span class="token punctuation">:</span> <span class="token string">'Oops'</span> <span class="token punctuation">}</span>
+<span class="token punctuation">{</span> type<span class="token punctuation">:</span> <span class="token string">'FETCH_POSTS'</span><span class="token punctuation">,</span> status<span class="token punctuation">:</span> <span class="token string">'success'</span><span class="token punctuation">,</span> response<span class="token punctuation">:</span> <span class="token punctuation">{</span> <span class="token operator">...</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span>
+
+</code></pre></div><p>又或者为它们定义不同的 type：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token punctuation">{</span> type<span class="token punctuation">:</span> <span class="token string">'FETCH_POSTS_REQUEST'</span> <span class="token punctuation">}</span>
+<span class="token punctuation">{</span> type<span class="token punctuation">:</span> <span class="token string">'FETCH_POSTS_FAILURE'</span><span class="token punctuation">,</span> error<span class="token punctuation">:</span> <span class="token string">'Oops'</span> <span class="token punctuation">}</span>
+<span class="token punctuation">{</span> type<span class="token punctuation">:</span> <span class="token string">'FETCH_POSTS_SUCCESS'</span><span class="token punctuation">,</span> response<span class="token punctuation">:</span> <span class="token punctuation">{</span> <span class="token operator">...</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span>
+
+</code></pre></div><p>究竟使用带有标记位的同一个 action，还是多个 action type 呢，完全取决于你。这应该是你的团队共同达成的约定。使用多个 type 会降低犯错误的机率，但是如果你使用像 <code>redux-actions</code> 这类的辅助库来生成 action 创建函数和 reducer 的话，这就完全不是问题了。</p> <p>无论使用哪种约定，一定要在整个应用中保持统一。
+在本教程中，我们将使用不同的 type 来做。</p> <h2 id="同步-action-创建函数（action-creator）"><a href="#同步-action-创建函数（action-creator）" aria-hidden="true" class="header-anchor">#</a> 同步 Action 创建函数（Action Creator）</h2> <p>下面先定义几个同步的 action 类型 和 action 创建函数。比如，用户可以选择要显示的 subreddit：</p> <h4 id="actions-js"><a href="#actions-js" aria-hidden="true" class="header-anchor">#</a> <code>actions.js</code></h4> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token constant">SELECT_SUBREDDIT</span> <span class="token operator">=</span> <span class="token string">'SELECT_SUBREDDIT'</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">selectSubreddit</span><span class="token punctuation">(</span><span class="token parameter">subreddit</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    type<span class="token punctuation">:</span> <span class="token constant">SELECT_SUBREDDIT</span><span class="token punctuation">,</span>
+    subreddit
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token template-string"><span class="token template-punctuation string">`</span><span class="token template-punctuation string">`</span></span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">js
+
+也可以按 &quot;刷新&quot; 按钮来更新它：
+
+</span><span class="token template-punctuation string">`</span></span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token template-punctuation string">`</span></span>js
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token constant">INVALIDATE_SUBREDDIT</span> <span class="token operator">=</span> <span class="token string">'INVALIDATE_SUBREDDIT'</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">invalidatesubreddit</span><span class="token punctuation">(</span><span class="token parameter">subreddit</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    type<span class="token punctuation">:</span> <span class="token constant">INVALIDATE_SUBREDDIT</span><span class="token punctuation">,</span>
+    subreddit
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div><p>这些是用户操作来控制的 action。也有另外一类 action，是由网络请求来控制。后面会介绍如何使用它们，现在，我们只是来定义它们。</p> <p>当需要获取指定 subreddit 的帖子的时候，需要 dispatch <code>REQUEST_POSTS</code> action：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token constant">REQUEST_POSTS</span> <span class="token operator">=</span> <span class="token string">'REQUEST_POSTS'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">requestPosts</span><span class="token punctuation">(</span><span class="token parameter">subreddit</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    type<span class="token punctuation">:</span> <span class="token constant">REQUEST_POSTS</span><span class="token punctuation">,</span>
+    subreddit
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>把 <code>REQUEST_POSTS</code> 和 <code>SELECT_SUBREDDIT</code> 或 <code>INVALIDATE_SUBREDDIT</code> 分开很重要。虽然它们的发生有先后顺序，但随着应用变得复杂，有些用户操作（比如，预加载最流行的 subreddit，或者一段时间后自动刷新过期数据）后需要马上请求数据。路由变化时也可能需要请求数据，所以一开始如果把请求数据和特定的 UI 事件耦合到一起是不明智的。</p> <p>最后，当收到请求响应时，我们会 dispatch <code>RECEIVE_POSTS</code>：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token constant">RECEIVE_POSTS</span> <span class="token operator">=</span> <span class="token string">'RECEIVE_POSTS'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">receivePosts</span><span class="token punctuation">(</span><span class="token parameter">subreddit<span class="token punctuation">,</span> json</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    type<span class="token punctuation">:</span> <span class="token constant">RECEIVE_POSTS</span><span class="token punctuation">,</span>
+    subreddit<span class="token punctuation">,</span>
+    posts<span class="token punctuation">:</span> json<span class="token punctuation">.</span>data<span class="token punctuation">.</span>children<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">child</span> <span class="token operator">=&gt;</span> child<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    receivedAt<span class="token punctuation">:</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>以上就是现在需要知道的所有内容。稍后会介绍如何把 dispatch action 与网络请求结合起来。</p> <blockquote><h5 id="错误处理须知"><a href="#错误处理须知" aria-hidden="true" class="header-anchor">#</a> 错误处理须知</h5> <p>在实际应用中，网络请求失败时也需要 dispatch action。</p></blockquote> <h2 id="设计-state-结构"><a href="#设计-state-结构" aria-hidden="true" class="header-anchor">#</a> 设计 state 结构</h2> <p>在写异步代码的时候，需要考虑更多的 state，所以我们要仔细考虑一下。</p> <p>这部分内容通常让初学者感到迷惑，因为选择哪些信息才能清晰地描述异步应用的 state 并不直观，还有怎么用一个树来把这些信息组织起来。</p> <p>我们以最通用的案例来打头：列表。Web 应用经常需要展示一些内容的列表。比如，帖子的列表，朋友的列表。首先要明确应用要显示哪些列表。然后把它们分开储存在 state 中，这样你才能对它们分别做缓存并且在需要的时候再次请求更新数据。</p> <p>&quot;Reddit 头条&quot; 应用会长这个样子：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token punctuation">{</span>
+  selectedsubreddit<span class="token punctuation">:</span> <span class="token string">'frontend'</span><span class="token punctuation">,</span>
+  postsBySubreddit<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    frontend<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      isFetching<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+      didInvalidate<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+      items<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    reactjs<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      isFetching<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+      didInvalidate<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+      lastUpdated<span class="token punctuation">:</span> <span class="token number">1439478405547</span><span class="token punctuation">,</span>
+      items<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+          id<span class="token punctuation">:</span> <span class="token number">42</span><span class="token punctuation">,</span>
+          title<span class="token punctuation">:</span> <span class="token string">'Confusion about Flux and Relay'</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+          id<span class="token punctuation">:</span> <span class="token number">500</span><span class="token punctuation">,</span>
+          title<span class="token punctuation">:</span> <span class="token string">'Creating a Simple Application Using React JS and Flux Architecture'</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div><p>下面列出几个要点：</p> <ul><li><p>分开存储 subreddit 信息，是为了缓存所有 subreddit。当用户来回切换 subreddit 时，可以立即更新，同时在不需要的时候可以不请求数据。不要担心把所有帖子放到内存中（会浪费内存）：除非你需要处理成千上万条帖子，同时用户还很少关闭标签页，否则你不需要做任何清理。</p></li> <li><p>每个帖子的列表都需要使用 <code>isFetching</code> 来显示进度条，<code>didInvalidate</code> 来标记数据是否过期，<code>lastUpdated</code> 来存放数据最后更新时间，还有 <code>items</code> 存放列表信息本身。在实际应用中，你还需要存放 <code>fetchedPageCount</code> 和 <code>nextPageUrl</code> 这样分页相关的 state。</p></li></ul> <blockquote><h5 id="嵌套内容须知"><a href="#嵌套内容须知" aria-hidden="true" class="header-anchor">#</a> 嵌套内容须知</h5> <p>在这个示例中，接收到的列表和分页信息是存在一起的。但是，这种做法并不适用于有互相引用的嵌套内容的场景，或者用户可以编辑列表的场景。想像一下用户需要编辑一个接收到的帖子，但这个帖子在 state tree 的多个位置重复出现。这会让开发变得非常困难。</p> <p>如果你有嵌套内容，或者用户可以编辑接收到的内容，你需要把它们分开存放在 state 中，就像数据库中一样。在分页信息中，只使用它们的 ID 来引用。这可以让你始终保持数据更新。最终的 state 看起来是这样：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token punctuation">{</span>
+  selectedsubreddit<span class="token punctuation">:</span> <span class="token string">'frontend'</span><span class="token punctuation">,</span>
+  entities<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    users<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      <span class="token number">2</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        id<span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+        name<span class="token punctuation">:</span> <span class="token string">'Andrew'</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    posts<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      <span class="token number">42</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        id<span class="token punctuation">:</span> <span class="token number">42</span><span class="token punctuation">,</span>
+        title<span class="token punctuation">:</span> <span class="token string">'Confusion about Flux and Relay'</span><span class="token punctuation">,</span>
+        author<span class="token punctuation">:</span> <span class="token number">2</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token number">100</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        id<span class="token punctuation">:</span> <span class="token number">100</span><span class="token punctuation">,</span>
+        title<span class="token punctuation">:</span> <span class="token string">'Creating a Simple Application Using React JS and Flux Architecture'</span><span class="token punctuation">,</span>
+        author<span class="token punctuation">:</span> <span class="token number">2</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  postsBySubreddit<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    frontend<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      isFetching<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+      didInvalidate<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+      items<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    reactjs<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      isFetching<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+      didInvalidate<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+      lastUpdated<span class="token punctuation">:</span> <span class="token number">1439478405547</span><span class="token punctuation">,</span>
+      items<span class="token punctuation">:</span> <span class="token punctuation">[</span> <span class="token number">42</span><span class="token punctuation">,</span> <span class="token number">100</span> <span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div></blockquote> <h2 id="处理-action"><a href="#处理-action" aria-hidden="true" class="header-anchor">#</a> 处理 Action</h2> <p>在讲 dispatch action 与网络请求结合使用细节前，我们为上面定义的 action 开发一些 reducer。</p> <h4 id="reducers-js"><a href="#reducers-js" aria-hidden="true" class="header-anchor">#</a> <code>reducers.js</code></h4> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> combineReducers <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'redux'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>
+  <span class="token constant">SELECT_SUBREDDIT</span><span class="token punctuation">,</span>
+  <span class="token constant">INVALIDATE_SUBREDDIT</span><span class="token punctuation">,</span>
+  <span class="token constant">REQUEST_POSTS</span><span class="token punctuation">,</span>
+  <span class="token constant">RECEIVE_POSTS</span>
+<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../actions'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">selectedsubreddit</span><span class="token punctuation">(</span>state <span class="token operator">=</span> <span class="token string">'reactjs'</span><span class="token punctuation">,</span> action<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>action<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token constant">SELECT_SUBREDDIT</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> action<span class="token punctuation">.</span>subreddit<span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">posts</span><span class="token punctuation">(</span>
+  <span class="token parameter">state <span class="token operator">=</span> <span class="token punctuation">{</span>
+    isFetching<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    didInvalidate<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    items<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  action</span>
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>action<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token constant">INVALIDATE_SUBREDDIT</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        didInvalidate<span class="token punctuation">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token constant">REQUEST_POSTS</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        isFetching<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+        didInvalidate<span class="token punctuation">:</span> <span class="token boolean">false</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token constant">RECEIVE_POSTS</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        isFetching<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        didInvalidate<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        items<span class="token punctuation">:</span> action<span class="token punctuation">.</span>posts<span class="token punctuation">,</span>
+        lastUpdated<span class="token punctuation">:</span> action<span class="token punctuation">.</span>receivedAt
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">postsBySubreddit</span><span class="token punctuation">(</span><span class="token parameter">state <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> action</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>action<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token constant">INVALIDATE_SUBREDDIT</span><span class="token punctuation">:</span>
+    <span class="token keyword">case</span> <span class="token constant">RECEIVE_POSTS</span><span class="token punctuation">:</span>
+    <span class="token keyword">case</span> <span class="token constant">REQUEST_POSTS</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        <span class="token punctuation">[</span>action<span class="token punctuation">.</span>subreddit<span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token function">posts</span><span class="token punctuation">(</span>state<span class="token punctuation">[</span>action<span class="token punctuation">.</span>subreddit<span class="token punctuation">]</span><span class="token punctuation">,</span> action<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> rootReducer <span class="token operator">=</span> <span class="token function">combineReducers</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  postsBySubreddit<span class="token punctuation">,</span>
+  selectedsubreddit
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> rootReducer<span class="token punctuation">;</span>
+</code></pre></div><p>上面代码有两个有趣的点：</p> <ul><li><p>使用 ES6 计算属性语法，使用 <code>Object.assign()</code> 来简洁高效地更新 <code>state[action.subreddit]</code>。这个：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">[</span>action<span class="token punctuation">.</span>subreddit<span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token function">posts</span><span class="token punctuation">(</span>state<span class="token punctuation">[</span>action<span class="token punctuation">.</span>subreddit<span class="token punctuation">]</span><span class="token punctuation">,</span> action<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>与下面代码等价：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">let</span> nextState <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+nextState<span class="token punctuation">[</span>action<span class="token punctuation">.</span>subreddit<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">posts</span><span class="token punctuation">(</span>state<span class="token punctuation">[</span>action<span class="token punctuation">.</span>subreddit<span class="token punctuation">]</span><span class="token punctuation">,</span> action<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> state<span class="token punctuation">,</span> nextState<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div></li> <li><p>我们提取出 <code>posts(state, action)</code> 来管理指定帖子列表的 state。这就是 reducer 组合！我们还可以借此机会把 reducer 分拆成更小的 reducer，这种情况下，我们把对象内列表的更新代理到了 <code>posts</code> reducer 上。</p></li></ul> <p>记住 reducer 只是函数而已，所以你可以尽情使用函数组合和高阶函数这些特性。</p> <h2 id="异步-action-创建函数"><a href="#异步-action-创建函数" aria-hidden="true" class="header-anchor">#</a> 异步 action 创建函数</h2> <p>最后，如何把之前定义的同步 action 创建函数和网络请求结合起来呢？标准的做法是使用<code>Redux Thunk 中间件</code>。要引入 <code>redux-thunk</code> 这个专门的库才能使用。目前，你只需要知道一个要点：通过使用指定的 middleware，action 创建函数除了返回 action 对象外还可以返回函数。这时，这个 action 创建函数就成为了<code>thunk</code>。</p> <p>当 action 创建函数返回函数时，这个函数会被 Redux Thunk middleware 执行。这个函数并不需要保持纯净；它还可以带有副作用，包括执行异步 API 请求。这个函数还可以 dispatch action，就像 dispatch 前面定义的同步 action 一样。</p> <p>我们仍可以在 <code>actions.js</code> 里定义这些特殊的 thunk action 创建函数。</p> <h4 id="actions-js-2"><a href="#actions-js-2" aria-hidden="true" class="header-anchor">#</a> <code>actions.js</code></h4> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> fetch <span class="token keyword">from</span> <span class="token string">'cross-fetch'</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token constant">REQUEST_POSTS</span> <span class="token operator">=</span> <span class="token string">'REQUEST_POSTS'</span>
+<span class="token keyword">function</span> <span class="token function">requestPosts</span><span class="token punctuation">(</span><span class="token parameter">subreddit</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    type<span class="token punctuation">:</span> <span class="token constant">REQUEST_POSTS</span><span class="token punctuation">,</span>
+    subreddit
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token constant">RECEIVE_POSTS</span> <span class="token operator">=</span> <span class="token string">'RECEIVE_POSTS'</span>
+<span class="token keyword">function</span> <span class="token function">receivePosts</span><span class="token punctuation">(</span><span class="token parameter">subreddit<span class="token punctuation">,</span> json</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    type<span class="token punctuation">:</span> <span class="token constant">RECEIVE_POSTS</span><span class="token punctuation">,</span>
+    subreddit<span class="token punctuation">,</span>
+    posts<span class="token punctuation">:</span> json<span class="token punctuation">.</span>data<span class="token punctuation">.</span>children<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">child</span> <span class="token operator">=&gt;</span> child<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    receivedAt<span class="token punctuation">:</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+ <span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token constant">INVALIDATE_SUBREDDIT</span> <span class="token operator">=</span> ‘<span class="token constant">INVALIDATE_SUBREDDIT</span>’
+ <span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">invalidateSubreddit</span><span class="token punctuation">(</span><span class="token parameter">subreddit</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword">return</span> <span class="token punctuation">{</span>
+     type<span class="token punctuation">:</span> <span class="token constant">INVALIDATE_SUBREDDIT</span><span class="token punctuation">,</span>
+     subreddit
+   <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span>
+
+<span class="token comment">// 来看一下我们写的第一个 thunk action 创建函数！</span>
+<span class="token comment">// 虽然内部操作不同，你可以像其它 action 创建函数 一样使用它：</span>
+<span class="token comment">// store.dispatch(fetchPosts('reactjs'))</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">fetchPosts</span><span class="token punctuation">(</span><span class="token parameter">subreddit</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+  <span class="token comment">// Thunk middleware 知道如何处理函数。</span>
+  <span class="token comment">// 这里把 dispatch 方法通过参数的形式传给函数，</span>
+  <span class="token comment">// 以此来让它自己也能 dispatch action。</span>
+
+  <span class="token keyword">return</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">dispatch</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 首次 dispatch：更新应用的 state 来通知</span>
+    <span class="token comment">// API 请求发起了。</span>
+
+    <span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token function">requestPosts</span><span class="token punctuation">(</span>subreddit<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// thunk middleware 调用的函数可以有返回值，</span>
+    <span class="token comment">// 它会被当作 dispatch 方法的返回值传递。</span>
+
+    <span class="token comment">// 这个案例中，我们返回一个等待处理的 promise。</span>
+    <span class="token comment">// 这并不是 redux middleware 所必须的，但这对于我们而言很方便。</span>
+
+    <span class="token keyword">return</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">http://www.subreddit.com/r/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>subreddit<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">.json</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>
+        <span class="token parameter">response</span> <span class="token operator">=&gt;</span> response<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token comment">// 不要使用 catch，因为会捕获</span>
+        <span class="token comment">// 在 dispatch 和渲染中出现的任何错误，</span>
+        <span class="token comment">// 导致 'Unexpected batch number' 错误。</span>
+        <span class="token comment">// https://github.com/facebook/react/issues/6895</span>
+         <span class="token parameter">error</span> <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'An error occurred.'</span><span class="token punctuation">,</span> error<span class="token punctuation">)</span>
+      <span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">json</span> <span class="token operator">=&gt;</span>
+        <span class="token comment">// 可以多次 dispatch！</span>
+        <span class="token comment">// 这里，使用 API 请求结果来更新应用的 state。</span>
+
+        <span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token function">receivePosts</span><span class="token punctuation">(</span>subreddit<span class="token punctuation">,</span> json<span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div><blockquote><h5 id="fetch-使用须知"><a href="#fetch-使用须知" aria-hidden="true" class="header-anchor">#</a> <code>fetch</code> 使用须知</h5> <p>本示例使用了 <code>fetch API</code>。它是替代 <code>XMLHttpRequest</code> 用来发送网络请求的非常新的 API。由于目前大多数浏览器原生还不支持它，建议你使用 <code>cross_fetch</code> 库：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// 每次使用 `fetch` 前都这样调用一下</span>
+<span class="token keyword">import</span> fetch <span class="token keyword">from</span> <span class="token string">'cross_fetch'</span><span class="token punctuation">;</span>
+</code></pre></div><p>在底层，它在浏览器端使用 <code>whatwg-fetch polyfill</code>，在服务器端使用 <code>node-fetch</code>，所以如果当你把应用改成 <code>同构</code> 时，并不需要改变 API 请求。</p> <p>注意，<code>fetch</code> polyfill 假设你已经使用了 <code>Promise</code> 的 polyfill。确保你使用 Promise polyfill 的一个最简单的办法是在所有应用代码前启用 Babel 的 ES6 polyfill：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// 在应用中其它任何代码执行前调用一次</span>
+<span class="token keyword">import</span> <span class="token string">'babel-polyfill'</span><span class="token punctuation">;</span>
+</code></pre></div></blockquote> <p>我们是如何在 dispatch 机制中引入 Redux Thunk middleware 的呢？我们使用了 <code>applyMiddleware()</code>，如下：</p> <h4 id="index-js"><a href="#index-js" aria-hidden="true" class="header-anchor">#</a> <code>index.js</code></h4> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> thunkMiddleware <span class="token keyword">from</span> <span class="token string">'redux-thunk'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> createLogger <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'redux-logger'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> createStore<span class="token punctuation">,</span> applyMiddleware <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'redux'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> selectSubreddit<span class="token punctuation">,</span> fetchPosts <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./actions'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> rootReducer <span class="token keyword">from</span> <span class="token string">'./reducers'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> loggerMiddleware <span class="token operator">=</span> <span class="token function">createLogger</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> store <span class="token operator">=</span> <span class="token function">createStore</span><span class="token punctuation">(</span>
+  rootReducer<span class="token punctuation">,</span>
+  <span class="token function">applyMiddleware</span><span class="token punctuation">(</span>
+    thunkMiddleware<span class="token punctuation">,</span> <span class="token comment">// 允许我们 dispatch() 函数</span>
+    loggerMiddleware <span class="token comment">// 一个很便捷的 middleware，用来打印 action 日志</span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+store<span class="token punctuation">.</span><span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token function">selectSubreddit</span><span class="token punctuation">(</span><span class="token string">'reactjs'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+store<span class="token punctuation">.</span><span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token function">fetchPosts</span><span class="token punctuation">(</span><span class="token string">'reactjs'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>store<span class="token punctuation">.</span><span class="token function">getState</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>thunk 的一个优点是它的结果可以再次被 dispatch：</p> <h4 id="actions-js-3"><a href="#actions-js-3" aria-hidden="true" class="header-anchor">#</a> <code>actions.js</code></h4> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> fetch <span class="token keyword">from</span> <span class="token string">'cross-fetch'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token constant">REQUEST_POSTS</span> <span class="token operator">=</span> <span class="token string">'REQUEST_POSTS'</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function">requestPosts</span><span class="token punctuation">(</span><span class="token parameter">subreddit</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    type<span class="token punctuation">:</span> <span class="token constant">REQUEST_POSTS</span><span class="token punctuation">,</span>
+    subreddit
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token constant">RECEIVE_POSTS</span> <span class="token operator">=</span> <span class="token string">'RECEIVE_POSTS'</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function">receivePosts</span><span class="token punctuation">(</span><span class="token parameter">subreddit<span class="token punctuation">,</span> json</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    type<span class="token punctuation">:</span> <span class="token constant">RECEIVE_POSTS</span><span class="token punctuation">,</span>
+    subreddit<span class="token punctuation">,</span>
+    posts<span class="token punctuation">:</span> json<span class="token punctuation">.</span>data<span class="token punctuation">.</span>children<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">child</span> <span class="token operator">=&gt;</span> child<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    receivedAt<span class="token punctuation">:</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token constant">INVALIDATE_SUBREDDIT</span> <span class="token operator">=</span> <span class="token string">'INVALIDATE_SUBREDDIT'</span><span class="token punctuation">;</span>
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">invalidateSubreddit</span><span class="token punctuation">(</span><span class="token parameter">subreddit</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    type<span class="token punctuation">:</span> <span class="token constant">INVALIDATE_SUBREDDIT</span><span class="token punctuation">,</span>
+    subreddit
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">fetchPosts</span><span class="token punctuation">(</span><span class="token parameter">subreddit</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token parameter">dispatch</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token function">requestPosts</span><span class="token punctuation">(</span>subreddit<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">http://www.reddit.com/r/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>subreddit<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">.json</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">response</span> <span class="token operator">=&gt;</span> response<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">json</span> <span class="token operator">=&gt;</span> <span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token function">receivePosts</span><span class="token punctuation">(</span>subreddit<span class="token punctuation">,</span> json<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">shouldFetchPosts</span><span class="token punctuation">(</span><span class="token parameter">state<span class="token punctuation">,</span> subreddit</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> posts <span class="token operator">=</span> state<span class="token punctuation">.</span>postsBySubreddit<span class="token punctuation">[</span>subreddit<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>posts<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>posts<span class="token punctuation">.</span>isFetching<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> posts<span class="token punctuation">.</span>didInvalidate<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">fetchPostsIfNeeded</span><span class="token punctuation">(</span><span class="token parameter">subreddit</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 注意这个函数也接收了 getState() 方法</span>
+  <span class="token comment">// 它让你选择接下来 dispatch 什么。</span>
+
+  <span class="token comment">// 当缓存的值是可用时，</span>
+  <span class="token comment">// 减少网络请求很有用。</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token parameter">dispatch<span class="token punctuation">,</span> getState</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">shouldFetchPosts</span><span class="token punctuation">(</span><span class="token function">getState</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> subreddit<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 在 thunk 里 dispatch 另一个 thunk！</span>
+      <span class="token keyword">return</span> <span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token function">fetchPosts</span><span class="token punctuation">(</span>subreddit<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 告诉调用代码不需要再等待。</span>
+      <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>这可以让我们逐步开发复杂的异步控制流，同时保持代码整洁如初：</p> <h4 id="index-js-2"><a href="#index-js-2" aria-hidden="true" class="header-anchor">#</a> <code>index.js</code></h4> <div class="language-js extra-class"><pre class="language-js"><code>store
+  <span class="token punctuation">.</span><span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token function">fetchPostsIfNeeded</span><span class="token punctuation">(</span><span class="token string">'reactjs'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>store<span class="token punctuation">.</span><span class="token function">getState</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><blockquote><h5 id="服务端渲染须知"><a href="#服务端渲染须知" aria-hidden="true" class="header-anchor">#</a> 服务端渲染须知</h5> <p>异步 action 创建函数对于做服务端渲染非常方便。你可以创建一个 store，dispatch 一个异步 action 创建函数，这个 action 创建函数又 dispatch 另一个异步 action 创建函数来为应用的一整块请求数据，同时在 Promise 完成和结束时才 render 界面。然后在 render 前，store 里就已经存在了需要用的 state。</p></blockquote> <p><code>Thunk middleware</code> 并不是 Redux 处理异步 action 的唯一方式：</p> <ul><li>你可以使用 <code>redux-promise</code> 或者 <code>redux-promise-middleware</code> 来 dispatch Promise 来替代函数。</li> <li>你可以使用 <code>redux-observable</code> 来 dispatch Observable。</li> <li>你可以使用 <code>redux-saga</code> 中间件来创建更加复杂的异步 action。</li> <li>你可以使用 <code>redux-pack</code> 中间件 dispatch 基于 Promise 的异步 Action。</li> <li>你甚至可以写一个自定义的 middleware 来描述 API 请求。</li></ul></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/React/reducer/" class="prev">
+          Redux-Reducer
+        </a></span> <span class="next"><a href="/React/quesition/">
+          React——面试题
+        </a>
+        →
+      </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.d2db35b1.js" defer></script><script src="/assets/js/2.3d65a9bd.js" defer></script><script src="/assets/js/14.35ddf8b9.js" defer></script>
+  </body>
+</html>
